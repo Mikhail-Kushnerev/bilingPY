@@ -1,8 +1,20 @@
+from sqlalchemy import Column, Integer
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy.orm import declarative_base, sessionmaker, declared_attr
+
 from .config import settings
 
-BASE = declarative_base()
+
+class PreBase:
+
+    @declared_attr
+    def __tablename__(cls):
+        return cls.__name__.lower()
+
+    id = Column(Integer, primary_key=True)
+
+
+BASE = declarative_base(cls=PreBase)
 
 engine = create_async_engine(settings.database_url())
 

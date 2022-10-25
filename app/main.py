@@ -1,16 +1,12 @@
 import uvicorn
 from fastapi import FastAPI
-from dotenv import load_dotenv
 
-load_dotenv(".env")
+from api import main_router
 
 
 app = FastAPI()
 
-
-@app.get("/")
-async def hello():
-    return {"q": "api"}
+app.include_router(main_router)
 
 
 if __name__ == "__main__":

@@ -1,13 +1,21 @@
-from fastapi_users import schemas
+from pydantic import BaseModel
+
+from .services import Service
 
 
-class UserRead(schemas.BaseUser[int]):
-    ...
+class Base(BaseModel):
+    id: int
 
 
-class UserCreate(schemas.BaseUserCreate):
-    ...
+class BalanceRead(Base):
+    first_name: str
+    balance: int
 
 
-class UserUpdate(schemas.BaseUserUpdate):
-    ...
+class MoneySend(Base):
+    money: float
+    service: Service
+
+
+class BalanceUpdate(Base):
+    money: float

@@ -2,9 +2,11 @@ version: "3.3"
 
 services:
   db:
-    image: postgres:14.0-alpine
+    image: postgres:latest
     volumes:
       - /var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
     env_file:
       - ./.env
 
@@ -13,7 +15,12 @@ services:
     restart: always
     ports:
       - '8000:8000'
+    volumes:
+      - ./app/migrations:/app
     env_file:
       - "./.env"
     depends_on:
       - db
+
+volumes:
+  migrations:
