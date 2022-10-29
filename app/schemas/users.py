@@ -1,21 +1,17 @@
-from pydantic import BaseModel
+from pydantic import Field
 
-from .services import Service
-
-
-class Base(BaseModel):
-    id: int
+from schemas import Base
 
 
-class BalanceRead(Base):
-    first_name: str
-    balance: int
+class CreateUser(Base):
+
+    first_name: str = Field(
+        ...,
+        min_length=2,
+        max_length=256,
+        title="Имя пользователя"
+    )
 
 
-class MoneySend(Base):
-    money: float
-    service: Service
-
-
-class BalanceUpdate(Base):
-    money: float
+class UpdateUser(Base):
+    pass

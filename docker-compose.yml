@@ -15,12 +15,7 @@ services:
     restart: always
     ports:
       - '8000:8000'
-    volumes:
-      - ./app/migrations:/app
     env_file:
       - "./.env"
     depends_on:
       - db
-
-volumes:
-  migrations:

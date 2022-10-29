@@ -1,21 +1,22 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from crud import Base
 from models import User
-from schemas.users import BalanceRead
+from schemas import CreateUser
 
 
-class UserCRUD():
+class UserCRUD(Base):
 
-    async def create(
+    async def send(
             self,
             session: AsyncSession,
-            user: BalanceRead
+            user: CreateUser
     ):
-        user = User(**user.dict())
+        user = User(**user.dict(exclude_none=True))
         session.add(user)
         await session.commit()
         await session.refresh(user)
         return user
 
 
-users_crud = UserCRUD()
+users_crud = UserCRUD(User)

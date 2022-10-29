@@ -1,6 +1,6 @@
 from sqlalchemy import (
     Column,
-    String,
+    String
 )
 from sqlalchemy.orm import relationship
 
@@ -9,5 +9,11 @@ from core.db import BASE
 
 class User(BASE):
     first_name = Column(String(256))
-    balance = relationship("Wallet", cascade="delete")
-    service = relationship("Purchase", cascade="delete")
+    wallet = relationship(
+        "Wallet",
+        cascade="delete"
+    )
+    purchase = relationship(
+        "Purchase",
+        cascade="delete"
+    )
