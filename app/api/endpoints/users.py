@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.db import get_async_session
-from crud import users_crud, wallet_crud
+from core import get_async_session
+from crud import users_crud
 from schemas import CreateUser
 from validators import check_exists_user
 

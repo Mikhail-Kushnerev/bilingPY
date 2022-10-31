@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from core.db import get_async_session
+from core import get_async_session
 from crud import wallet_crud
 
 wallet_router = APIRouter()
@@ -21,7 +21,7 @@ async def check_balance(
     return result
 
 
-@wallet_router.post(
+@wallet_router.patch(
     "/send-money"
 )
 async def send_money(

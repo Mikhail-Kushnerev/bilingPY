@@ -11,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncEngine
 from alembic import context
 from dotenv import load_dotenv
 
-from core.base import BASE
+from core import BASE
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 load_dotenv(".env")

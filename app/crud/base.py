@@ -27,7 +27,8 @@ class Base:
             session: AsyncSession,
     ):
         item = self.model(**data.dict())
-        wallet = Wallet(user_id=data.id, money=0)
+        if self.model.__name__ == "User":
+            wallet = Wallet(user_id=data.id, money=0)
+            session.add(wallet)
         session.add(item)
-        session.add(wallet)
         await session.commit()

@@ -1,3 +1,4 @@
+from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -24,20 +25,17 @@ class WalletCRUD(Base):
         money: float,
         session: AsyncSession
     ):
-        obj_data = jsonable_encoder(db_obj)
-        update_data = obj_in.dict(exclude_unset=True)
-        target = await session.execute(
-            update(Wallet)
+        db_data = await session.execute(
+            select(Wallet)
             .where(
                 Wallet.id == 1
             )
-            .values(
-                {"money": (Wallet.money + money)}
-            )
         )
-        # session.add(target)
+        db_data = db_data.scalars().first()
+        db_data.money += money
+        session.add(db_data)
         await session.commit()
-        return target
+        return db_data
 
 
 wallet_crud = WalletCRUD(Wallet)

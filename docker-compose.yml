@@ -19,3 +19,19 @@ services:
       - "./.env"
     depends_on:
       - db
+
+  cache:
+    image: redis:latest
+    restart: always
+    command: redis-server
+    ports:
+     - "6379:6379"
+    volumes:
+      - redis-data:/data
+      - redis-conf:/usr/local/etc/redis/redis.conf
+    depends_on:
+      - backend
+
+volumes:
+  redis-data:
+  redis-conf:
