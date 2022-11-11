@@ -13,8 +13,6 @@ services:
   backend:
     build: .
     restart: always
-    ports:
-      - '8000:8000'
     env_file:
       - "./.env"
     depends_on:
@@ -31,6 +29,16 @@ services:
       - redis-conf:/usr/local/etc/redis/redis.conf
     depends_on:
       - backend
+
+  nginx:
+    image: nginx:1.21.3-alpine
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - cache
 
 volumes:
   redis-data:

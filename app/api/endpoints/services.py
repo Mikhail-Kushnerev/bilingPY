@@ -5,7 +5,6 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from core import get_async_session, get_cache
 from crud import services_crud
 from schemas import Service
-from validators import check_exists_user
 
 
 services_router = APIRouter()
@@ -32,17 +31,11 @@ async def create_new_service(
 async def choice_service(
         service_id: int,
         user_id: int,
-        cache: Redis = Depends(get_cache),
-        session: AsyncSession = Depends(get_async_session)
+        cache: Redis = Depends(get_cache)
 ):
-    person = await check_exists_user(
+    await services_crud.add_to_cart(
+        service_id,
         user_id,
-        session
+        cache
     )
-    if not person:
-        await services_crud.add_to_cart(
-            service_id,
-            user_id,
-            cache
-        )
-    return {"detail": "OK"}
+    return {"Добавлено!"}
