@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     postgres_db: str
     postgres_host: str
     postgres_port: str
+    token: str
 
     # @property
     def database_url(self):
