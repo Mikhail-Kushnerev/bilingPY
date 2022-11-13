@@ -1,7 +1,7 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models import Wallet
+# from models import Wallet
 
 
 class Base:
@@ -28,7 +28,7 @@ class Base:
     ):
         item = self.model(**data.dict())
         if self.model.__name__ == "User":
-            wallet = Wallet(user_id=data.id, money=0)
-            session.add(wallet)
+            item.wallet = 0
+            # session.add(wallet)
         session.add(item)
         await session.commit()
